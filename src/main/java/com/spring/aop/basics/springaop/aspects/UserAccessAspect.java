@@ -1,8 +1,10 @@
 package com.spring.aop.basics.springaop.aspects;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
@@ -34,4 +36,16 @@ public class UserAccessAspect {
 
 		LOGGER.info("This is in after Returning in {} with result {}",joinpoint,result);
 	}
+	
+	
+	@Around("execution(* com.spring.aop.basics.springaop.business.*.*(..))")
+	public Object aroundAdvuse(ProceedingJoinPoint joinPoint) throws Throwable {
+
+		long StartTime = System.currentTimeMillis();
+		Object retValue = joinPoint.proceed();
+		long totalTimeTaken = System.currentTimeMillis()-StartTime;
+		LOGGER.info("TIme take to run {},is {}",StartTime,totalTimeTaken);
+		return retValue;
+	}
+	
 }
