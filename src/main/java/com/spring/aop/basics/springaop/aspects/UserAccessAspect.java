@@ -17,7 +17,7 @@ public class UserAccessAspect {
 
 	private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
-	@Before("execution(* com.spring.aop.basics.springaop.data.*.*(..))")
+	@Before("com.spring.aop.basics.springaop.aspects.CommonPointCuts.businessLayerPointCut()")
 	public void checkUserAcess(JoinPoint joinpoint) {
 
 		LOGGER.info("Checking for the user access");
@@ -25,20 +25,20 @@ public class UserAccessAspect {
 
 	}
 
-	@After("execution(* com.spring.aop.basics.springaop.business.*.*(..))")
+	@After("com.spring.aop.basics.springaop.aspects.CommonPointCuts.businessLayerPointCut()")
 	public void after(JoinPoint joinpoint) {
 
 		LOGGER.info("This is in after aspect {}",joinpoint);
 	}
 
-	@AfterReturning(value = "execution(* com.spring.aop.basics.springaop.business.*.*(..))", returning="result")
+	@AfterReturning(value = "com.spring.aop.basics.springaop.aspects.CommonPointCuts.dataLayerPointCut()", returning="result")
 	public void afterReturning(JoinPoint joinpoint,Object result) {
 
 		LOGGER.info("This is in after Returning in {} with result {}",joinpoint,result);
 	}
 	
 	
-	@Around("execution(* com.spring.aop.basics.springaop.business.*.*(..))")
+	@Around("com.spring.aop.basics.springaop.aspects.CommonPointCuts.annotationPointCut()")
 	public Object aroundAdvuse(ProceedingJoinPoint joinPoint) throws Throwable {
 
 		long StartTime = System.currentTimeMillis();
